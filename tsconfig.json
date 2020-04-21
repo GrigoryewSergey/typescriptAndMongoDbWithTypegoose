@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "target": "es2017",
     "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2017",
+    "sourceMap": true,
     "outDir": "./dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "sourceRoot": "./src",
-    "sourceMap": true
-  }
+    "baseUrl": "./",
+    "incremental": true
+  },
+  "exclude": ["node_modules", "dist"]
 }

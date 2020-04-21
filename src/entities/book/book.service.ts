@@ -1,40 +1,39 @@
-import mongoose = require("mongoose");
-import { getModelForClass } from "@typegoose/typegoose";
+import { Injectable } from "@nestjs/common";
 import { Book } from "./book";
+import { InjectModel } from "nestjs-typegoose";
+import { ReturnModelType } from "@typegoose/typegoose";
 
-mongoose.connect("mongodb://localhost:27017/books", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: true
-});
+@Injectable()
+export class BookService {
+  constructor(@InjectModel(Book) private readonly BookModel: ReturnModelType<typeof Book>) {
+  }
 
-const BookModel = getModelForClass(Book);
+  allBooks = () => {
+    return this.BookModel.find()
+      .then((books: Book[]) => books)
+      .catch(error => console.log(error));
+  };
 
-export const allBooks = () => {
-  return BookModel.find()
-    .then((books: Book[]) => books)
-    .catch(error => console.log(error));
-};
+  getBook = (id: string) => {
+    return this.BookModel.findById(id)
+      .then((book: Book | null) => book)
+      .catch(error => console.log(error));
+  };
 
-export const getBook = (id: string) => {
-  return BookModel.findById(id)
-    .then((book: Book | null) => book)
-    .catch(error => console.log(error));
-};
+  deleteBook = (id: string) => {
+    return this.BookModel.deleteOne({ _id: id })
+      .then(ok => ok)
+      .catch(error => console.log(error));
+  };
 
-export const deleteBook = (id: string) => {
-  return BookModel.deleteOne({ _id: id })
-    .then(ok => ok)
-    .catch(error => console.log(error));
-};
+  updateBook = (id: string, updateData: object) => {
+    return this.BookModel.findByIdAndUpdate(id, updateData)
+      .then((book: Book | null) => book)
+      .catch(error => console.log(error));
+  };
 
-export const updateBook = (id: string, updateData: object) => {
-  return BookModel.findByIdAndUpdate(id, updateData)
-    .then((book: Book | null) => book)
-    .catch(error => console.log(error));
-};
-
-export const addBook = (book: Book) => {
-  const newBook = new BookModel(book);
-  newBook.save();
-};
+  addBook = (book: Book) => {
+    const newBook = new this.BookModel(book);
+    newBook.save();
+  };
+}
