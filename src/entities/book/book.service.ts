@@ -11,25 +11,25 @@ export class BookService {
   allBooks = async () => {
     return await this.BookModel.find()
       .then((books: Book[]) => books)
-      .catch(error => console.log(error));
+      .catch(error => error);
   };
 
   getBook = (id: string) => {
     return this.BookModel.findById(id)
       .then((book: Book | null) => book)
-      .catch(error => console.log(error));
+      .catch(error => error);
   };
 
   deleteBook = (id: string) => {
     return this.BookModel.deleteOne({ _id: id })
       .then(ok => ok)
-      .catch(error => console.log(error));
+      .catch(error => error);
   };
 
   updateBook = (id: string, updateData: object) => {
     return this.BookModel.findByIdAndUpdate(id, updateData)
       .then((book: Book | null) => book)
-      .catch(error => console.log(error));
+      .catch(error => error);
   };
 
   addBook = (book: Book) => {

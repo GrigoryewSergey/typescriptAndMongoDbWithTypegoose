@@ -9,14 +9,12 @@ export class BookController {
 
   @Get()
   async listBooks() {
-    const list = await this.bookService.allBooks();
-    console.log(list);
-    return list;
+    return await this.bookService.allBooks();
   }
 
   @Get(":id")
-  async getBook(@Param() param: string) {
-    return await this.bookService.getBook(param);
+  async getBook(@Param() param) {
+    return await this.bookService.getBook(param.id);
   }
 
   @Post()
@@ -25,13 +23,13 @@ export class BookController {
   }
 
   @Put(":id")
-  async updateBook(@Param() param: string, @Body() updateData) {
-    return await this.bookService.updateBook(param, updateData);
+  async updateBook(@Param() param, @Body() updateData) {
+    return await this.bookService.updateBook(param.id, updateData);
   }
 
   @Delete(":id")
-  async deleteBook(@Param() param: string) {
-    return await this.bookService.deleteBook(param);
+  async deleteBook(@Param() param) {
+    return await this.bookService.deleteBook(param.id);
   }
 
 }
