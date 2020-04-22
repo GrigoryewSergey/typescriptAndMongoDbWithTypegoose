@@ -8,8 +8,8 @@ export class BookService {
   constructor(@InjectModel(Book) private readonly BookModel: ReturnModelType<typeof Book>) {
   }
 
-  allBooks = () => {
-    return this.BookModel.find()
+  allBooks = async () => {
+    return await this.BookModel.find()
       .then((books: Book[]) => books)
       .catch(error => console.log(error));
   };

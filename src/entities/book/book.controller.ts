@@ -9,10 +9,12 @@ export class BookController {
 
   @Get()
   async listBooks() {
-   return await this.bookService.allBooks();
+    const list = await this.bookService.allBooks();
+    console.log(list);
+    return list;
   }
 
-  @Get(':id')
+  @Get(":id")
   async getBook(@Param() param: string) {
     return await this.bookService.getBook(param);
   }
@@ -22,17 +24,18 @@ export class BookController {
     return this.bookService.addBook(book);
   }
 
-  @Put(':id')
+  @Put(":id")
   async updateBook(@Param() param: string, @Body() updateData) {
     return await this.bookService.updateBook(param, updateData);
   }
 
-  @Delete(':id')
+  @Delete(":id")
   async deleteBook(@Param() param: string) {
     return await this.bookService.deleteBook(param);
   }
 
 }
+
 /*mongoose.connect("mongodb://localhost:27017/books", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
